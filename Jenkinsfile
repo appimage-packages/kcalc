@@ -24,8 +24,8 @@ node('linux') {
 
 
     currentBuild.result = "SUCCESS"
-    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '2')), disableConcurrentBuilds(), \
-    [[$class: 'GithubProjectProperty', displayName: '', projectUrlStr: 'https://github.com/appimage-packages/kcalc/']], pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/5 * * * *')])])
+    properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '6', daysToKeepStr: '', numToKeepStr: '5')), disableConcurrentBuilds(), \
+    [$class: 'GithubProjectProperty', displayName: '', projectUrlStr: 'https://github.com/appimage-packages/kcalc/'], pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/5 * * * *')])])
     try {
 
         stage( 'Checkout' ) {
