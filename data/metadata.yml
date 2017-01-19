@@ -46,6 +46,7 @@ frameworks:
     - plasma-framework
     - kdecoration
     - breeze
+    - kinit
 type: git
 url: http://anongit.kde.org/kcalc
 buildsystem: cmake
