@@ -45,7 +45,7 @@ cp -rfv /opt/usr/plugins/<%= name %> ./plugins || true
 #mkdir -p ./usr/lib/qml/
 mkdir -p ./usr/{share,bin,lib}
 mkdir ./etc
-rsync -aruxv --progress /opt/usr/plugins/kf5/ ./plugins/
+rsync -aruxv --progress /opt/usr/plugins/ ./plugins/
 rsync -aruxv --progress /opt/usr/share/ ./usr/share/
 rsync -aruxv --progress /opt/etc/ ./etc/
 rsync -aruxv --progress /opt/usr/qml/ ./qml
@@ -137,7 +137,7 @@ DATE=$(date +"%Y%m%d")
 
 APPIMAGEFILENAME="<%= name %>-git$DATE-$ARCH.AppImage"
 
-./appimagetool-x86_64.AppImage -v -u "zsync|https://s3-eu-central-1.amazonaws.com/ds9-apps/$APPIMAGEFILENAME.zsync" /<%= name %>.AppDir /appimage/$APPIMAGEFILENAME
+./appimagetool-x86_64.AppImage -v -u "zsync|https://s3-eu-central-1.amazonaws.com/ds9-apps/$APPIMAGEFILENAME|/appimage/<%= name %>-_latestVersion-$ARCH.AppImage.zsync" /<%= name %>.AppDir /appimage/$APPIMAGEFILENAME
 ls -l
 ls -l <%= name %>.AppDir/
 ls -l /appimage/
