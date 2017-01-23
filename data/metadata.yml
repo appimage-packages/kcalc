@@ -1,6 +1,5 @@
 name: kcalc
-packages:
-  - zsync
+packages: ''  
   #app specifc
 frameworks:
   build_kf5: true
