@@ -1,5 +1,6 @@
 name: kcalc
-packages: ''  
+binary: kcalc
+packages: ''
   #app specifc
 frameworks:
   build_kf5: true
