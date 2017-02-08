@@ -8,9 +8,9 @@ frameworks:
     - extra-cmake-modules
     - kcodecs
     - kconfig
-    - kconfigwidgets
     - kcoreaddons
     - kauth
+    - kconfigwidgets
     - kdoctools
     - kguiaddons
     - ki18n
