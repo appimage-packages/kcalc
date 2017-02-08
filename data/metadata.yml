@@ -10,9 +10,9 @@ frameworks:
     - kconfig
     - kcoreaddons
     - kauth
-    - kconfigwidgets
     - kdoctools
     - kguiaddons
+    - kconfigwidgets
     - ki18n
     - kinit
     - phonon
