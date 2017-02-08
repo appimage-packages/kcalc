@@ -10,6 +10,7 @@ frameworks:
     - kconfig
     - kcoreaddons
     - kauth
+    - karchive
     - kdoctools
     - kguiaddons
     - kconfigwidgets
