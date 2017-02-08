@@ -11,9 +11,9 @@ frameworks:
     - kcoreaddons
     - kauth
     - karchive
+    - ki18n
     - kdoctools
     - kguiaddons
-    - ki18n
     - kwidgetsaddons
     - kconfigwidgets
     - kinit
@@ -21,6 +21,7 @@ frameworks:
     - knotifications
     - kxmlgui
     - kdecoration
+    - breeze-icons
     - breeze
 type: git
 url: http://anongit.kde.org/kcalc
