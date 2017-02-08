@@ -13,8 +13,8 @@ frameworks:
     - karchive
     - kdoctools
     - kguiaddons
-    - kconfigwidgets
     - ki18n
+    - kconfigwidgets
     - kinit
     - phonon
     - knotifications
