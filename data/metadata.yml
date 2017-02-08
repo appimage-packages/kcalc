@@ -6,15 +6,16 @@ frameworks:
   build_kf5: true
   frameworks:
     - extra-cmake-modules
-    - kauth
     - kcodecs
     - kconfig
     - kconfigwidgets
     - kcoreaddons
+    - kauth
     - kdoctools
     - kguiaddons
     - ki18n
     - kinit
+    - phonon
     - knotifications
     - kwidgetsaddons
     - kxmlgui
