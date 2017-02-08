@@ -14,11 +14,11 @@ frameworks:
     - kdoctools
     - kguiaddons
     - ki18n
+    - kwidgetsaddons
     - kconfigwidgets
     - kinit
     - phonon
     - knotifications
-    - kwidgetsaddons
     - kxmlgui
     - kdecoration
     - breeze
