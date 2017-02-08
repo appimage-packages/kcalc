@@ -32,29 +32,28 @@ wget https://github.com/probonopd/linuxdeployqt/releases/download/1/linuxdeployq
 chmod a+x linuxdeployqt-1-x86_64.AppImage
 
 cd /<%= name %>.AppDir
-
+mv /app/* .
 #Move binary/desktop/icon into AppDir
-mv /opt/usr/bin/<%= name %> .
-mv /opt/usr/share/applications/*<%= name %>*.desktop <%= name %>.desktop
-cp /opt/usr/share/icons/breeze/apps/48/accessories-calculator.svg  .
-
+mv /app/usr/bin/<%= name %> .
+mv /app/usr/share/applications/*<%= name %>*.desktop <%= name %>.desktop
+cp /app/usr/share/icons/breeze/apps/48/accessories-calculator.svg  .
 
 #All the plugins do not seem to be getting in. Manual copy.
-mkdir -p ./plugins; cp -rfv /opt/usr/lib/qt5/plugins/phonon4qt5_backend $_
-#mkdir -p ./usr/lib/qml/
+
 mkdir -p ./usr/{share,bin,lib}
 mkdir ./etc
-rsync -aruxv --progress /opt/usr/plugins/ ./plugins/
-rsync -aruxv --progress /opt/usr/share/ ./usr/share/
-rsync -aruxv --progress /opt/etc/ ./etc/
-rsync -aruxv --progress /opt/usr/qml/ ./qml
-cp /usr/lib/x86_64-linux-gnu/pulseaudio/*.so* ./usr/lib/
-ls /opt/usr/lib/libg*
-cp /opt/usr/bin/gst* ./usr/bin/
+rsync -aruxv --progress /app/usr/plugins/ ./plugins/
+rsync -aruxv --progress /app/usr/share/ ./usr/share/
+rsync -aruxv --progress /app/etc/ ./etc/
+
 mkdir ./lib
+#sound related files, uncomment if needed
 rm -rfv /opt/usr/lib/gstreamer-1.0/include
-cp /opt/usr/lib/gstreamer-1.0/* ./lib/
-cp /usr/lib/x86_64-linux-gnu/pulseaudio/*.so* ./lib/
+#cp /opt/usr/lib/gstreamer-1.0/* ./lib/
+#cp /usr/lib/x86_64-linux-gnu/pulseaudio/*.so* ./lib/
+#cp /opt/usr/bin/gst* ./usr/bin/
+#cp /usr/lib/x86_64-linux-gnu/pulseaudio/*.so* ./usr/lib/
+#mkdir -p ./plugins; cp -rfv /opt/usr/lib/qt5/plugins/phonon4qt5_backend $_
 cp -rfv /usr/share/mime ./usr/share/
 cp /etc/mime.types ./etc/
 update-mime-database ./usr/share/mime
@@ -62,7 +61,7 @@ update-mime-database ./usr/share/mime
 strip -g $(find ./usr/bin) || true
 strip -g $(find ./usr/lib) || true
 
-mv /opt/usr/libexec/kf5/* ./usr/bin/ || true
+mv /opt/usr/libexec/* ./usr/bin/ || true
 mv /opt/usr/lib/x86_64-linux-gnu/libexec/kf5/* ./usr/bin/ || true
 mv /opt/usr/libexec/gstreamer-1.0/* ./usr/bin || true
 cp -rfv /opt/usr/lib/x86_64-linux-gnu/* /opt/usr/lib/
@@ -93,7 +92,11 @@ rm -rf ./usr/share/doc/ECM || true
 rm -rf ./usr/share/doc/libdbusmenu-qt5-doc || true
 rm -rf ./usr/share/gtk-doc || true
 rm -rf ./usr/share/wallpapers || true
-ls /opt/usr/lib/libg*
+
+# Many assets are not needed... especially not twice (icons are rcc packaged)
+rm -rf usr/share/icons/breeze/{places,mimetypes,devices,apps,applets,actions,status,emotes,emblems}
+rm -rf usr/share/icons/breeze-dark/{places,mimetypes,devices,apps,applets,actions,status,emotes,emblems}
+
 find . -name '*.a' -exec rm {} \;
 get_desktopintegration <%= name %>
 cd /app/src
@@ -113,11 +116,11 @@ HERE="\`( cd \"\$DIR\" && pwd )\`"
 export LD_PRELOAD=\$HERE/exec_wrapper.so
 export QML2_IMPORT_PATH=\$HERE/qml
 export QT_PLUGIN_PATH=\$HERE/plugins
-export PATH=\$HERE/usr/bin/:\$HERE/usr/sbin/:\$HERE/usr/games/:\$HERE/bin/:\$HERE/sbin/:$PATH
-export LD_LIBRARY_PATH=\$HERE/usr/lib/:\$HERE/usr/lib/x86_64-linux-gnu/:\$HERE/usr/lib64/:\$HERE/lib/:\$HERE/lib/x86_64-linux-gnu/:\$HERE/lib64/:$LD_LIBRARY_PATH
-export XDG_DATA_DIRS=\$HERE/usr/share:\$HOME/.local/share:/usr/local/share/:/usr/share:$XDG_DATA_DIRS
+export PATH=\$HERE/usr/bin/:\$HERE/usr/sbin/:\$HERE/usr/games/:\$HERE/bin/:\$HERE/sbin/:\$PATH
+export LD_LIBRARY_PATH=\$HERE/usr/lib/:\$HERE/usr/lib/x86_64-linux-gnu/:\$HERE/usr/lib64/:\$HERE/lib/:\$HERE/lib/x86_64-linux-gnu/:\$HERE/lib64/:\$LD_LIBRARY_PATH
+export XDG_DATA_DIRS=\$HERE/usr/share:\$HOME/.local/share:/usr/local/share/:/usr/share:\$XDG_DATA_DIRS
 export XDG_DATA_HOME=\$HOME/.local/share
-export XDG_CONFIG_DIRS=\$HERE/etc/xdg:$XDG_CONFIG_DIRS
+export XDG_CONFIG_DIRS=\$HERE/etc/xdg:\$XDG_CONFIG_DIRS
 export KDE_FORK_SLAVES=1
 export GST_PLUGIN_PATH=\$HERE/lib
 export GST_PLUGIN_SCANNER=\$HERE/bin
@@ -133,12 +136,11 @@ chmod a+x appimagetool-x86_64.AppImage
 
 ARCH=$(arch)
 DATE=$(date +"%Y%m%d")
-
-APPIMAGEFILENAME="<%= name %>-git$DATE-$ARCH.AppImage"
+TIME=$(time)
+APPIMAGEFILENAME="<%= name %>-git$DATE-$ARCH-$TIME.AppImage"
 
 #Re set LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/opt/usr/lib:/opt/usr/lib/x86_64-linux-gnu:/usr/lib:/usr/lib64
 gpg2 --import /root/.gnupg/appimage.key
-./appimagetool-x86_64.AppImage -v -s -u "zsync|$APPIMAGEFILENAME" /<%= name %>.AppDir /appimage/$APPIMAGEFILENAME
-zsyncmake -u "https://s3-eu-central-1.amazonaws.com/ds9-apps/ark-appimage/master/$APPIMAGEFILENAME" -o /appimage/<%= name %>_latestversion.zsync /appimage/$APPIMAGEFILENAME
-ls /appimage/
+./appimagetool-x86_64.AppImage -v -s -u "zsync|https://s3-eu-central-1.amazonaws.com/ds9-apps/<%= name %>-appimage/master/$APPIMAGEFILENAME" /<%= name %>.AppDir /appimage/$APPIMAGEFILENAME
+zsyncmake -u "https://s3-eu-central-1.amazonaws.com/ds9-apps/<%= name %>-appimage/master/$APPIMAGEFILENAME" -o /appimage/<%= name %>_latestversion.zsync /appimage/$APPIMAGEFILENAME
