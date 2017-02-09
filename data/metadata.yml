@@ -6,26 +6,27 @@ frameworks:
   build_kf5: true
   frameworks:
     - extra-cmake-modules
+    - kauth
     - kcodecs
     - kconfig
+    - kconfigwidgets
     - kcoreaddons
-    - kauth
-    - karchive
-    - ki18n
     - kdoctools
     - kguiaddons
-    - kwidgetsaddons
-    - kconfigwidgets
+    - ki18n
+    - kservice
+    - kio
     - kwindowsystem
     - kcrash
-    - kdbusaddons
-    - kservice
-    - solid
-    - kbookmarks
-    - kio
     - kinit
     - phonon
     - knotifications
+    - kwidgetsaddons
+    - attica
+    - kglobalaccel
+    - kitemviews
+    - kiconthemes
+    - ktextwidgets
     - kxmlgui
     - kdecoration
     - breeze-icons
