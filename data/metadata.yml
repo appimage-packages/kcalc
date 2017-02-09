@@ -20,6 +20,7 @@ frameworks:
     - kcrash
     - kdbusaddons
     - kservice
+    - kio
     - kinit
     - phonon
     - knotifications
