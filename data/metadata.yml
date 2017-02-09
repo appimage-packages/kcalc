@@ -16,6 +16,7 @@ frameworks:
     - kguiaddons
     - kwidgetsaddons
     - kconfigwidgets
+    - kwindowsystem
     - kcrash
     - kservice
     - kinit
