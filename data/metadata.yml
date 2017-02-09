@@ -21,6 +21,7 @@ frameworks:
     - kdbusaddons
     - kservice
     - solid
+    - kbookmarks
     - kio
     - kinit
     - phonon
